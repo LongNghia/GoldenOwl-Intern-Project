@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ASMSmaliIdeaPluginConfiguration">
+    <asm skipDebug="true" skipFrames="true" skipCode="false" expandFrames="false" />
+    <groovy codeStyle="LEGACY" />
+  </component>
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable/image_background_rotate.xml" value="0.19791666666666666" />
+        <entry key="app/src/main/res/drawable/round_corner.xml" value="0.37135416666666665" />
+        <entry key="app/src/main/res/drawable/round_corner_circle.xml" value="0.3723958333333333" />
+        <entry key="app/src/main/res/drawable/round_corner_circle_color_changeable.xml" value="0.19791666666666666" />
+        <entry key="app/src/main/res/drawable/round_corner_color_changeable.xml" value="0.19791666666666666" />
+        <entry key="app/src/main/res/drawable/round_corner_gray.xml" value="0.19791666666666666" />
+        <entry key="app/src/main/res/drawable/round_corner_grey.xml" value="0.19791666666666666" />
+        <entry key="app/src/main/res/drawable/round_corner_light_gray.xml" value="0.3723958333333333" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_cart.xml" value="0.2351851851851852" />
+        <entry key="app/src/main/res/layout/fragment_product.xml" value="0.3223350253807107" />
+        <entry key="app/src/main/res/layout/item_cart.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/item_product.xml" value="0.35625" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="jbr-11" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="10dp"
+
+>
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:orientation="vertical"
+                    android:padding="16dp"
+
+    >
+        <ImageView android:layout_width="match_parent" android:layout_height="380dp"
+
+                   android:src="@drawable/nike"
+                    android:id="@+id/shop_item_image"
+                   android:layout_gravity="center"
+                   android:background="@drawable/round_corner_color_changeable"
+        />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:id="@+id/shop_item_name"
+                  android:text="Name"
+                  android:textSize="24dp"
+                  android:textFontWeight="800"
+                  android:layout_marginTop="26dp"
+                  android:layout_marginBottom="20dp"
+                  android:textColor="@color/color_text"
+
+        />
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content"
+                  android:id="@+id/shop_item_description"
+                  android:text="description"
+                  android:layout_marginBottom="20dp"
+                  android:textColor="@color/color_description"
+
+                  />
+        <RelativeLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                      android:id="@+id/shop_item_bottom"
+                      >
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:text="100$"
+                      android:id="@+id/shop_item_price"
+                      android:textSize="18dp"
+                      android:textFontWeight="800"
+                      android:textColor="@color/color_text"
+
+                      android:layout_centerVertical="true"
+
+            />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                      android:layout_alignParentRight="true"
+                      android:text="ADD TO CARD"
+                      android:background="@drawable/round_corner"
+                      android:textSize="18dp"
+                      android:textFontWeight="800"
+
+                      android:id="@+id/shop_item_button"
+                      android:padding="5dp"
+                      android:layout_centerVertical="true"
+                      android:textColor="@color/color_text"
+
+            />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</FrameLayout>
