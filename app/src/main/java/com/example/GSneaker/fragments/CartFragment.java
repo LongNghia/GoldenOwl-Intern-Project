@@ -58,6 +58,7 @@ public class CartFragment extends Fragment {
         String cartListString = sharedPreferences.getString("cart_list","");
         if (!cartListString.isEmpty()){
             shopViewModel.setCart(Product.listFromString(cartListString));
+            mainActivity.setCountProductInCart(shopViewModel.getCartCount());
         }
 
         shopViewModel.getCart().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {

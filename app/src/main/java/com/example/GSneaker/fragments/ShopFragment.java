@@ -66,7 +66,6 @@ public class ShopFragment extends Fragment {
             @Override
             public void onChanged(List<Product> shopItems) {
                 shopAdapter.setData(shopItems);
-
                 editor.putString("shop_list", shopItems.toString());
                 editor.apply();
             }

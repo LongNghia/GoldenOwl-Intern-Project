@@ -17,6 +17,12 @@ GShoes project on Android.
 - com.aurelhubert:ahbottomnavigation:2.3.4
 - com.squareup.picasso:picasso:2.71828
 
+## Project Hierarchy 
+<p align="center">
+<img src="./resources/project.png" />
+</p>
+<br>
+
 ## How it work?
 - This project uses **PageViewer** to display 2 Fragment in slides: _ShopFragment_ and _CartFragment_
 - **ViewModel** is used to communicate between 2 Fragment, which holds 2 properties:
@@ -27,3 +33,7 @@ ShopRepo , CartRepo.
 - Use **RecyclerView** to display the products lists.
 - Use **Picasso** to fetch the images, it is cache-suported which is suitable for RecyclerView.
 - Add the **bottomNavigation** feature to display the current Fragment and the number of products in cart.
+
+## Todo
+- Animation: add product to cart, remove item from cart.
+- Image drop shadow.
