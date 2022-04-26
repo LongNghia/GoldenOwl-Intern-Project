@@ -1,8 +1,11 @@
 package com.example.GSneaker.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +21,7 @@ import com.example.GSneaker.R;
 import com.example.GSneaker.viewmodels.ShopViewModel;
 
 import java.util.List;
+import java.util.Set;
 
 
 public class ShopFragment extends Fragment {
@@ -26,9 +30,8 @@ public class ShopFragment extends Fragment {
     private RecyclerView recyclerView;
     private ShopAdapter shopAdapter;
     private MainActivity mainActivity;
-
     private String TAG = "ProductFragment";
-
+    private SharedPreferences sharedPreferences;
     private ShopViewModel shopViewModel;
 
     public ShopFragment() {
@@ -44,16 +47,28 @@ public class ShopFragment extends Fragment {
         recyclerView = mView.findViewById(R.id.rcv_product);
         mainActivity = (MainActivity) getActivity();
 
+        sharedPreferences = mainActivity.getSharedPreferences();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainActivity);
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
         shopViewModel = new ViewModelProvider(requireActivity()).get(ShopViewModel.class);
+
+        // restore previous shop data.
+        String shopListString = sharedPreferences.getString("shop_list", "");
+        if (!shopListString.isEmpty()) {
+            shopViewModel.setProducts(Product.listFromString(shopListString));
+        }
+
         shopViewModel.getProducts().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
-            public void onChanged(List<Product> cartItems) {
-                Log.d(TAG, "onChanged: cart change"+cartItems);
-                shopAdapter.setData(cartItems);
+            public void onChanged(List<Product> shopItems) {
+                shopAdapter.setData(shopItems);
+
+                editor.putString("shop_list", shopItems.toString());
+                editor.apply();
             }
         });
 
@@ -62,17 +77,19 @@ public class ShopFragment extends Fragment {
             @Override
             public void addToCart(TextView textView, Product product) {
                 product.setQuantity(1);
-                product.setAddToCart(true);
                 shopViewModel.addItemToCart(product);
-                mainActivity.setCountProductInCart(mainActivity.getCountProduct()+1);
+                mainActivity.setCountProductInCart(mainActivity.getCountProduct() + 1);
                 shopAdapter.notifyDataSetChanged();
             }
         };
 
         shopAdapter = new ShopAdapter(shopInterface);
-        shopAdapter.setData(shopViewModel.getProducts().getValue());
-        recyclerView.setAdapter(shopAdapter);
 
+        List<Product> products = shopViewModel.getProducts().getValue();
+        shopAdapter.setData(products);
+
+        recyclerView.setAdapter(shopAdapter);
         return mView;
     }
+
 }

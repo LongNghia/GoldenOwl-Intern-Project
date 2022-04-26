@@ -1,5 +1,7 @@
 package com.example.GSneaker;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import androidx.core.content.ContextCompat;
@@ -10,12 +12,20 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem;
 import com.aurelhubert.ahbottomnavigation.AHBottomNavigationViewPager;
 import com.aurelhubert.ahbottomnavigation.notification.AHNotification;
 import com.example.GSneaker.adapters.ViewPagerAdapter;
+import com.example.GSneaker.models.Product;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private String TAG = "MainAcitvity";
-    AHBottomNavigationViewPager ahBottomNavigationViewPager;
-    AHBottomNavigation ahBottomNavigation;
-    ViewPagerAdapter viewPagerAdapter;
+    private AHBottomNavigationViewPager ahBottomNavigationViewPager;
+    private AHBottomNavigation ahBottomNavigation;
+    private ViewPagerAdapter viewPagerAdapter;
+    private SharedPreferences sharedPreferences;
 
     private  int mCountProduct;
 
@@ -50,12 +60,13 @@ public class MainActivity extends AppCompatActivity {
 //        list.add(new TestClass(1));
 //        list.add(new TestClass(2));
 //        list.add(new TestClass(3));
-//        Log.d(TAG, "onCreate: "+list);
 //
 //        TestClass testClass = new TestClass(2);
-//        Log.d(TAG, "onCreate: remove " +  list.remove(list.get(1)));
 
         /////////
+
+        String name =  this.getPackageName() + "_preferences";
+        sharedPreferences = this.getSharedPreferences(name, Context.MODE_PRIVATE );
 
         ahBottomNavigation = findViewById(R.id.AHBottomNavigation);
         ahBottomNavigationViewPager = findViewById(R.id.AHBottomNavigationViewPager);
@@ -106,4 +117,11 @@ public class MainActivity extends AppCompatActivity {
     public int getCountProduct() {
         return mCountProduct;
     }
+
+    public SharedPreferences getSharedPreferences() {
+        return sharedPreferences;
+    }
+
+
+
 }

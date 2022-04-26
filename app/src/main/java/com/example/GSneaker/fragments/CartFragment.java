@@ -1,5 +1,6 @@
 package com.example.GSneaker.fragments;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,7 +28,7 @@ public class CartFragment extends Fragment {
     private TextView tvEmptyCart;
     private CartAdapter cartAdapter;
     private MainActivity mainActivity;
-
+    private SharedPreferences sharedPreferences;
     private ShopViewModel shopViewModel;
 
     public CartFragment() {
@@ -46,20 +47,32 @@ public class CartFragment extends Fragment {
 
         mainActivity = (MainActivity) getActivity();
 
+        sharedPreferences = mainActivity.getSharedPreferences();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mainActivity);
         recyclerView.setLayoutManager(linearLayoutManager);
         shopViewModel = new ViewModelProvider(requireActivity()).get(ShopViewModel.class);
+
+        // restore previous cart data.
+        String cartListString = sharedPreferences.getString("cart_list","");
+        if (!cartListString.isEmpty()){
+            shopViewModel.setCart(Product.listFromString(cartListString));
+        }
+
         shopViewModel.getCart().observe(getViewLifecycleOwner(), new Observer<List<Product>>() {
             @Override
             public void onChanged(List<Product> cartItems) {
-                Log.d(TAG, "onChanged: cart change" + cartItems);
                 cartAdapter.setData(cartItems);
 
-                if (cartItems.size()==0){
+                editor.putString("cart_list", cartItems.toString());
+                editor.apply();
+
+                if (cartItems.size() == 0) {
                     recyclerView.setVisibility(View.INVISIBLE);
                     tvCartAmount.setVisibility(View.INVISIBLE);
                     tvEmptyCart.setVisibility(View.VISIBLE);
-                }else{
+                } else {
                     recyclerView.setVisibility(View.VISIBLE);
                     tvCartAmount.setVisibility(View.VISIBLE);
                     tvEmptyCart.setVisibility(View.INVISIBLE);
@@ -94,6 +107,7 @@ public class CartFragment extends Fragment {
                 textView.setText((CharSequence) shopViewModel.getTotalPrice());
             }
         };
+
 
         cartAdapter = new CartAdapter(cartInterface);
 

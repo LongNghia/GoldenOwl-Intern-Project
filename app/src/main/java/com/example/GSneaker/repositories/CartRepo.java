@@ -23,6 +23,7 @@ public class CartRepo {
 
      public void setCart(List<Product> list){
         mutableCart.setValue(list);
+         calculateCartTotal();
      }
 
     public void initCart() {

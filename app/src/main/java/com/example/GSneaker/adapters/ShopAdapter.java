@@ -24,14 +24,15 @@ import java.io.InputStream;
 import java.util.List;
 
 public class ShopAdapter extends RecyclerView.Adapter<ShopAdapter.ProductViewHolder> {
-String TAG = "ProductAdapter";
+    String TAG = "ProductAdapter";
     private List<Product> mListProduct;
     private ShopInterface shopInterface;
 
     public interface ShopInterface {
         void addToCart(TextView textView, Product product);
     }
-    public ShopAdapter(ShopInterface shopInterface){
+
+    public ShopAdapter(ShopInterface shopInterface) {
         this.shopInterface = shopInterface;
     }
 
@@ -43,7 +44,7 @@ String TAG = "ProductAdapter";
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d(TAG, "onCreateViewHolder");
+        // Log.d(TAG, "onCreateViewHolder");
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_shop, parent, false);
         return new ProductViewHolder(view);
     }
@@ -81,16 +82,16 @@ String TAG = "ProductAdapter";
         holder.itemDescription.setText(product.getDescription());
         holder.itemPrice.setText("$" + product.getPrice());
 
-        if (product.isAddToCart()){
+        if (product.getQuantity() > 0) {
             holder.itemButton.setBackgroundResource(R.drawable.round_corner_gray);
             holder.itemButton.setText("Added");
-        }else{
+        } else {
             holder.itemButton.setText("ADD TO CARD");
 
             holder.itemButton.setBackgroundResource(R.drawable.round_corner);
         }
         holder.itemButton.setOnClickListener(view -> {
-            if (!product.isAddToCart())
+            if (product.getQuantity() == 0)
                 shopInterface.addToCart(holder.itemButton, product);
         });
     }
@@ -122,30 +123,30 @@ String TAG = "ProductAdapter";
         }
     }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
-    }
+//    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+//        ImageView bmImage;
+//
+//        public DownloadImageTask(ImageView bmImage) {
+//            this.bmImage = bmImage;
+//        }
+//
+//        protected Bitmap doInBackground(String... urls) {
+//            String urldisplay = urls[0];
+//            Bitmap mIcon11 = null;
+//            try {
+//                InputStream in = new java.net.URL(urldisplay).openStream();
+//                mIcon11 = BitmapFactory.decodeStream(in);
+//            } catch (Exception e) {
+//                Log.e("Error", e.getMessage());
+//                e.printStackTrace();
+//            }
+//            return mIcon11;
+//        }
+//
+//        protected void onPostExecute(Bitmap result) {
+//            bmImage.setImageBitmap(result);
+//        }
+//    }
 
     public List<Product> getListProduct() {
         return mListProduct;

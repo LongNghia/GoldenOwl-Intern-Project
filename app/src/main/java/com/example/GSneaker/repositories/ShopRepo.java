@@ -15,11 +15,11 @@ import java.util.List;
 
 public class ShopRepo {
     private String TAG = "ShopRepo";
-    private MutableLiveData<List<Product>> mutableProductList;
+    private MutableLiveData<List<Product>> mutableProductList = new MutableLiveData<>();
+    ;
 
     public LiveData<List<Product>> getProducts() {
         if (mutableProductList == null) {
-            mutableProductList = new MutableLiveData<>();
             loadProducts();
         }
         return mutableProductList;
@@ -30,15 +30,14 @@ public class ShopRepo {
     }
 
     /*
-    * Modify an item of shop's products
-    * */
-    public void modifyProductItem(Product p){
+     * Modify an item of shop's products
+     * */
+    public void itemRemovedFromCart(Product p) {
         List<Product> productList = new ArrayList<>(mutableProductList.getValue());
-        for (Product product: productList) {
+        for (Product product : productList) {
             if (product.getId().equals(p.getId())) {
                 int index = productList.indexOf(product);
                 product.setQuantity(0);
-                product.setAddToCart(false);
                 productList.set(index, product);
                 mutableProductList.setValue(productList);
                 break;
@@ -46,11 +45,25 @@ public class ShopRepo {
         }
 //        mutableProductList.setValue(productList);
     }
+
+    public boolean addItemToCart(Product p) {
+        List<Product> productList = new ArrayList<>(mutableProductList.getValue());
+        for (Product product : productList) {
+            if (product.getId().equals(p.getId())) {
+                int index = productList.indexOf(product);
+                product.setQuantity(1);
+                productList.set(index, product);
+                mutableProductList.setValue(productList);
+                break;
+            }
+        }
+        return true;
+    }
+
     private void loadProducts() {
         List<Product> productList = getListProduct();
         mutableProductList.setValue(productList);
     }
-
 
     private List<Product> getListProduct() {
         List<Product> list = new ArrayList<>();
@@ -72,7 +85,6 @@ public class ShopRepo {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.d(TAG, "getListProduct: list = " + list);
         return list;
     }
 

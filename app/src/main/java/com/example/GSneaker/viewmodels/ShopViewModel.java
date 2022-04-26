@@ -1,7 +1,6 @@
 package com.example.GSneaker.viewmodels;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.example.GSneaker.models.Product;
 import com.example.GSneaker.repositories.CartRepo;
@@ -21,20 +20,34 @@ public class ShopViewModel extends ViewModel {
         return cartRepo.getCart();
     }
 
-    public void setProducts(List<Product> list){
+    public void setProducts(List<Product> list) {
         shopRepo.setProducts(list);
     }
-    public void setCart(List<Product> list){
-        cartRepo.setCart(list);
+
+
+    public void setCart(List<Product> list) {
+        if (list != null) {
+            cartRepo.setCart(list);
+//            List<Product> shopList = getCart().getValue();
+//            for (Product p : list) {
+//                if (p.getQuantity() > 0) {
+//                    shopList.get(Integer.parseInt(p.getId()) - 1).setQuantity(1);
+//                }
+//
+//            }
+//            setProducts(shopList);
+        }
     }
 
     public boolean addItemToCart(Product product) {
-        return cartRepo.addItemToCart(product);
+        cartRepo.addItemToCart(product);
+        shopRepo.addItemToCart(product);
+        return true;
     }
 
     public void removeItemFromCart(Product cartItem) {
         cartRepo.removeItemFromCart(cartItem);
-        shopRepo.modifyProductItem(cartItem);
+        shopRepo.itemRemovedFromCart(cartItem);
     }
 
     public void changeQuantity(Product cartItem, int quantity) {
@@ -49,7 +62,7 @@ public class ShopViewModel extends ViewModel {
         cartRepo.initCart();
     }
 
-    public int getCartCount(){
+    public int getCartCount() {
         return this.getCart().getValue().size();
     }
 
